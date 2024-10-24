@@ -70,6 +70,9 @@ function Signup() {
                 required: "Full name is required",
               })}
             />
+            {errors.name && (
+              <p className="text-red-600 text-center">{errors.name.message}</p>
+            )}
             <Input
               label="Email: "
               placeholder="Enter your email"
@@ -84,9 +87,7 @@ function Signup() {
               })}
             />
             {errors.email && (
-              <p className="text-red-600 mt-1 text-center">
-                {errors.email.message}
-              </p>
+              <p className="text-red-600 text-center">{errors.email.message}</p>
             )}
             <Input
               label="Password: "
@@ -99,13 +100,13 @@ function Signup() {
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(
                       value
                     ) ||
-                    "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character",
+                    "Password must contain 8 characters including at least one uppercase, one lowercase, one digit, and one special character",
                 },
               })}
             />
 
             {errors.password && (
-              <p className="text-red-600 mt-1 text-center">
+              <p className="text-red-600 text-center">
                 {errors.password.message}
               </p>
             )}
