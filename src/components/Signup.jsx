@@ -9,7 +9,11 @@ import { login } from "../store/authSlice";
 function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -63,7 +67,7 @@ function Signup() {
               placeholder="Enter your name"
               type="text"
               {...register("name", {
-                required: true,
+                required: "Full name is required",
               })}
             />
             <Input
@@ -71,7 +75,7 @@ function Signup() {
               placeholder="Enter your email"
               type="email"
               {...register("email", {
-                required: true,
+                required: "Email address is required",
                 validate: {
                   matchPattern: (value) =>
                     /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
@@ -79,12 +83,17 @@ function Signup() {
                 },
               })}
             />
+            {errors.email && (
+              <p className="text-red-600 mt-1 text-center">
+                {errors.email.message}
+              </p>
+            )}
             <Input
               label="Password: "
               type="password"
               placeholder="Enter your password"
               {...register("password", {
-                required: true,
+                required: "Password is required",
                 validate: {
                   matchPattern: (value) =>
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(
@@ -94,6 +103,12 @@ function Signup() {
                 },
               })}
             />
+
+            {errors.password && (
+              <p className="text-red-600 mt-1 text-center">
+                {errors.password.message}
+              </p>
+            )}
             <Button type="submit" className="w-full">
               Create Account
             </Button>
